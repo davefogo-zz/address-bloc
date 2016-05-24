@@ -23,8 +23,10 @@ class AddressBook
     @entries.each_with_index do |entry, index|
       if name == entry.name
         index
+        entries.delete_at(index)
+      else
+        "No match found"
       end
     end
-    entries.delete_at(index)
   end
 end
