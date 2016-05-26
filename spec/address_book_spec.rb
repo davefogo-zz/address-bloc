@@ -37,7 +37,6 @@ RSpec.describe AddressBook do
       expect(new_entry.email).to eq('ada@email.com')
     end
   end
-
   #Tests to see if address book method import_from_csv is working as expected
 
   describe "import_from_csv" do
@@ -83,6 +82,49 @@ RSpec.describe AddressBook do
       entry_five = book.entries[4]
 
     check_entry(entry_five, "Snake", "303.404.5055", "snake@email.com")
+    end
+  end
+
+  describe "binary_search" do
+    it "searches AddressBook for a non-existent entry" do
+      book.import_from_csv("entries.csv")
+      entry = book.binary_search("Bill")
+      expect(entry).to be_nil
+    end
+
+    it "searches AddressBook for  Snake" do
+      book.import_from_csv("entries.csv")
+      entry = book.binary_search("Snake")
+      #Check the object type to be an Entry class object
+      expect(entry).to be_a Entry
+      check_entry(entry, "Snake", "303.404.5055", "snake@email.com")
+    end
+
+    it "searches AddressBook for David" do
+      book.import_from_csv("entries.csv")
+      entry = book.binary_search("David")
+      expect(entry).to be_a Entry
+      check_entry(entry, "David", "202.303.4044", "david@email.com")
+    end
+
+    it "searches AddressBook for Shalashaska" do
+      book.import_from_csv("entries.csv")
+      entry = book.binary_search("Shalashaska")
+      expect(entry).to be_an Entry
+      check_entry(entry, "Shalashaska", "404.505.6066", "shalashaska@email.com")
+    end
+
+    it "searches AddressBook for Sheryl" do
+      book.import_from_csv("entries.csv")
+      entry = book.binary_search("Sheryl")
+      expect(entry).to be_a Entry
+      check_entry(entry, "Sheryl", "505.606.7077", "sheryl@email.com")
+    end
+
+    it "searches AddressBook for Dave" do
+      book.import_from_csv("entries.csv")
+      entry = book.binary_search("Dave")
+      expect(entry).to be_nil
     end
   end
 end
